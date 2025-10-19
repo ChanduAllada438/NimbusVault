@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: nimbusvault-backend
+    env: node
+    branch: recovered-clean
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    autoDeploy: true
+    regions:
+      - oregon
+    envVars:
+      - key: MONGO_URI
+        # DO NOT set value here. Set this in the Render Dashboard for security.
+      - key: JWT_SECRET
+        # DO NOT set value here. Set this in the Render Dashboard for security.
