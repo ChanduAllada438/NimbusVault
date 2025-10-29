@@ -2,7 +2,7 @@ services:
   - type: web
     name: nimbusvault-backend
     env: node
-    branch: recovered-clean
+  branch: main
     plan: free
     buildCommand: cd backend && npm install
     startCommand: cd backend && npm start
