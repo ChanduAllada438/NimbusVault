@@ -5,11 +5,16 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
-
 const app = express();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',');
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    callback(null, allowedOrigins.includes(origin));
+  },
+}));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan('tiny'));
@@ -27,7 +32,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
-
 app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/files', require('./routes/files'));
@@ -53,6 +57,5 @@ function shutdown() {
     }
   });
 }
-
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
