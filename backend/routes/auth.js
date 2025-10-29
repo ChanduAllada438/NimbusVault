@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const jwt = require('jsonwebtoken');
 
 // Temporary in-memory store — replace with DB-backed User model in production
@@ -30,6 +31,8 @@ router.get('/ping', (req, res) => res.json({ ok: true, service: 'auth' }));
 module.exports = router;
 const express = require('express');
 const router = express.Router();
+=======
+>>>>>>> main
 
 // @route   POST /api/auth/register
 // @desc    Register user

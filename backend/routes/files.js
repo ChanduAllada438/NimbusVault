@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
@@ -31,6 +32,8 @@ router.post('/upload', upload.single('file'), (req, res) => {
 module.exports = router;
 const express = require('express');
 const router = express.Router();
+=======
+>>>>>>> main
 
 
 const multer = require('multer');
