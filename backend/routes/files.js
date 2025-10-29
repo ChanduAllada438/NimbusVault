@@ -1,5 +1,39 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
+const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
+
+const uploadsDir = path.join(__dirname, '..', 'uploads');
+fs.mkdirSync(uploadsDir, { recursive: true });
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadsDir),
+  filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
+});
+const upload = multer({ storage });
+
+// GET /api/files - list uploaded files
+router.get('/', (req, res) => {
+  fs.readdir(uploadsDir, (err, files) => {
+    if (err) return res.status(500).json({ message: 'Unable to read uploads' });
+    const list = files.map(f => ({ name: f, url: `/uploads/${encodeURIComponent(f)}` }));
+    res.json(list);
+  });
+});
+
+// POST /api/files/upload - upload a single file (field name: file)
+router.post('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
+  res.status(201).json({ filename: req.file.filename, url: `/uploads/${encodeURIComponent(req.file.filename)}` });
+});
+
+module.exports = router;
+const express = require('express');
+const router = express.Router();
+=======
+>>>>>>> main
 
 
 const multer = require('multer');

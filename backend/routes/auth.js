@@ -1,5 +1,38 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
+const jwt = require('jsonwebtoken');
+
+// Temporary in-memory store — replace with DB-backed User model in production
+const users = new Map();
+
+// POST /api/auth/register
+router.post('/register', async (req, res) => {
+  const { email, password } = req.body || {};
+  if (!email || !password) return res.status(400).json({ message: 'Email and password required' });
+  if (users.has(email)) return res.status(409).json({ message: 'User already exists' });
+  // NOTE: store hashed password with bcrypt in real app
+  users.set(email, { email, password });
+  return res.status(201).json({ message: 'User registered' });
+});
+
+// POST /api/auth/login
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body || {};
+  const user = users.get(email);
+  if (!user || user.password !== password) return res.status(401).json({ message: 'Invalid credentials' });
+  const token = jwt.sign({ email }, process.env.JWT_SECRET || 'dev-secret', { expiresIn: '7d' });
+  return res.json({ token });
+});
+
+// GET /api/auth/ping
+router.get('/ping', (req, res) => res.json({ ok: true, service: 'auth' }));
+
+module.exports = router;
+const express = require('express');
+const router = express.Router();
+=======
+>>>>>>> main
 
 // @route   POST /api/auth/register
 // @desc    Register user
