@@ -7,6 +7,18 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const app = express();
 
+// Startup info for debugging on Render
+console.log('Starting NimbusVault backend');
+console.log('MONGO_URI present:', !!process.env.MONGO_URI);
+console.log('JWT_SECRET present:', !!process.env.JWT_SECRET);
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled rejection:', reason);
+});
+
 // Middleware
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000').split(',');
 app.use(cors({
