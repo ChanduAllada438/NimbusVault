@@ -18,7 +18,7 @@ function Dashboard({ token, onLogout }) {
 
   const fetchFiles = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/files', {
+      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/files', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFiles(res.data);
@@ -44,7 +44,7 @@ function Dashboard({ token, onLogout }) {
     const formData = new FormData();
     formData.append('file', selectedFile);
     try {
-      await axios.post('http://localhost:5000/api/files/upload', formData, {
+      await axios.post('${process.env.REACT_APP_API_URL}/api/files/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ function Dashboard({ token, onLogout }) {
 
 const handleDownload = async (filename) => {
   try {
-    const response = await axios.get(`http://localhost:5000/api/files/${filename}`, {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/files/${filename}`, {
       headers: { Authorization: `Bearer ${token}` },
       responseType: 'blob',
     });
